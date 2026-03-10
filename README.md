@@ -14,8 +14,10 @@ under a symmetric equilibrium benchmark where the public belief coincides with t
 
 #### coefficient_plot.py
 
-\begin{itemize}
- \item computes the curvature coefficient $P_2(\rho^*)$
- \item evaluated the payoff coefficient 
- \item generated the figure used in the numerical section of the dissertation
-\end{itemize}
+- computes the curvature coefficient $P_2(\rho^*)$
+- evaluated the payoff coefficient 
+- generated the figure used in the numerical section of the dissertation
+
+Running the script produced the file: equilibrium_curvature.pdf, which contains the two-panel figure used in the dissertation.
+
+
