@@ -58,3 +58,12 @@ python coefficient_plot.py
 ```
 
 The script will generate the output file in the working directory.
+
+## Relation to Dissertation 
+
+The generated figure appears in the numerical analysis section of the dissertation and illustrates the behaviour of the curvature coefficient derived analytically in the preceding section. The numerical resulrs confirm that the curvature coefficient $P_2(\rho^*)$ remains strictly positive across the interior belief space under the symmetric benchmark. 
+
+## Author 
+
+Alice Warren 
+Fourth Year Mathematics Dissertation
