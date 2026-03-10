@@ -220,5 +220,5 @@ if __name__ == "__main__":
     )
 
     plt.tight_layout(rect=[0,0,1,0.95])
-    plt.savefig("equilibrium_curvature1.pdf", dpi=300, bbox_inches="tight")
+    plt.savefig("equilibrium_curvature.pdf", dpi=300, bbox_inches="tight")
     plt.show()
