@@ -20,4 +20,23 @@ under a symmetric equilibrium benchmark where the public belief coincides with t
 
 Running the script produced the file: equilibrium_curvature.pdf, which contains the two-panel figure used in the dissertation.
 
+## Parameter Configuration 
 
+The numerical illustration uses the following baseline parameters:
+
+N = 3, the number of players 
+$\lambda$ = 1, the volatility aversion parameter
+R = 100, the informational history length
+
+The belief grid is evaluated over 
+
+$$
+\rho^* \in [0.1, 0.9] 
+$$
+
+using 400 evenly spaced points.
+
+## Requirements & Running the Code
+The code requires the following Python packages: '''numpy''' and  '''matplotlib'''
+
+To reproduced the figure run: ''' python coefficient_plot.py''' and the script will generate the output file in the working directory. 
