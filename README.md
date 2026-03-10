@@ -37,6 +37,6 @@ $$
 using 400 evenly spaced points.
 
 ## Requirements & Running the Code
-The code requires the following Python packages: '''numpy''' and  '''matplotlib'''
+The code requires the following Python packages: '''bash  numpy''' and  '''bash matplotlib'''
 
-To reproduced the figure run: ''' python coefficient_plot.py''' and the script will generate the output file in the working directory. 
+To reproduced the figure run: '''bash python coefficient_plot.py''' and the script will generate the output file in the working directory. 
