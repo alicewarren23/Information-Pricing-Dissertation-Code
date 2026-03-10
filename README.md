@@ -11,3 +11,11 @@ $$
 under a symmetric equilibrium benchmark where the public belief coincides with the true parameter. The resulting figure illustrates the curvature behaviour of the equilibrium payoff across the belief space. 
 
 ## Repository Contents 
+
+#### coefficient_plot.py
+
+\begin{itemize}
+ \item computes the curvature coefficient $P_2(\rho^*)$
+ \item evaluated the payoff coefficient 
+ \item generated the figure used in the numerical section of the dissertation
+\end{itemize}
