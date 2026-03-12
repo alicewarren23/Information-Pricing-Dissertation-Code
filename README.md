@@ -10,6 +10,7 @@ Two figures are reproduced:
 The scripts implement the theoretical expressions derived in the dissertation and generate the figures used in the numerical illustrations.
 
 ## Repsoitory Contents
+#### MSE Decay Script
 
 ```bash
 MSE_decay.py
@@ -55,6 +56,44 @@ mse_decay_plot.png
 ```
 which corresponds to the schematic illustration of MSE decay in Chapter 3.
 
+#### Equilibrium Curvature Script
+
+```bash
+coefficient_plot.py
+```
+
+This script evaluates the equilibrium curvature coefficient 
+
+$$
+P_2(\rho^*)
+$$
+
+and the associated payoff coefficient
+
+$$
+\frac{3 P_2}{4 \lambda D_Y}.
+$$
+
+These quantities determine whether informational precision generates a payoff advantage in equilibrium. The scrip evaluates the coefficients across the belief space 
+
+$$
+\rho^* \in [0.1, 0.9]
+$$
+
+under the symmetric benchmark where public belief coincides with the true parameter. The numerical evaluation uses the following baseline parameters: 
+
+```bash
+N = 3
+lambda = 1
+R = 100
+```
+Running this script generayes the figure
+
+```bash
+equilibrium_curvature.png
+```
+
+which appears in the Numerical Analysis of Curvature Coefficient section of Chapter 4.
 
 ## Requirements & Running the Code
 
