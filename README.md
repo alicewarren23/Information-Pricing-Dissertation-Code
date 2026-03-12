@@ -10,7 +10,7 @@ Two figures are reproduced:
 The scripts implement the theoretical expressions derived in the dissertation and generate the figures used in the numerical illustrations.
 
 ## Repsoitory Contents
-#### MSE Decay Script
+### MSE Decay Script
 
 ```bash
 MSE_decay.py
@@ -56,7 +56,7 @@ mse_decay_plot.png
 ```
 which corresponds to the schematic illustration of MSE decay in Chapter 3.
 
-#### Equilibrium Curvature Script
+### Equilibrium Curvature Script
 
 ```bash
 coefficient_plot.py
