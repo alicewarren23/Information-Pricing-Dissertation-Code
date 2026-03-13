@@ -1,0 +1,6 @@
+## Structural Coefficient Notebook 
+This documents contains the coefficients that appears in the volatility-averse payoff for a player $i$ (equation 4.5). 
+
+$$
+U_i(\vec{p}, \hat\rho_i; \lambda) =  S_i(q_i, q_j, p_{eq},N)\hat\rho_i + P_i(q_i, q_j, p_{eq},N) - \lambda (S_i(q_i, q_j, p_{eq},N)^2 \frac{\hat\rho_i(1-\hat\rho_i)}{S_{J,i} + 3}).
+$$
