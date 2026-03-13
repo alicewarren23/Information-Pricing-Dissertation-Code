@@ -1,4 +1,4 @@
-## Structural Coefficient Notebook 
+##Structural Coefficient Notebook 
 This documents contains the coefficients that appears in the volatility-averse payoff for a player i (equation 4.5). 
 
 
