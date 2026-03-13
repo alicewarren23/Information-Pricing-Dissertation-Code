@@ -3,8 +3,14 @@
 The document contains the payoff coefficients used player $i$'s in the volatility-neutral payoff (equation 4.3) when facing player $j$ and N-1 equally informed players. 
 
 $$
-\boxed{U_i(\vec{p},  \hat\rho_i) = q_i (q_jA_N(\hat\rho_i, p_{eq}) + B_N(\hat\rho_i, p_{eq})) + q_jC_{N}(\hat\rho_i, p_{eq}) + D_N(\hat\rho_i, p_{eq}}
+\Theta(\hat\rho_i, \vec{p}_{-i}) = q_j A_N(\hat\rho_i, p_{eq}) + B_N(\hat\rho_i, p_{eq})
 $$
+
+
+$$
+\Omega(\hat\rho_i, \vec{p}_{-i}) = C_{N}(\hat\rho_i, p_{eq}) + D_N(\hat\rho_i, p_{eq})
+$$
+
 
 where 
 
