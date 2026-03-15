@@ -1,15 +1,18 @@
-## Structural Coefficient Notebook 
+## Structural Coefficient Notebook
 
-This documents contains the coefficients that appears in the volatility-averse payoff for a player $i$ when facing a player $j$ and $N-2$ equally informed players.(equation 4.5). 
+This document contains the structural coefficients that appear in the volatility-averse payoff for player $i$ when facing one opponent $j$
+and $N-2$ equally informed players (Equation 4.5 of the dissertation). These coefficients are derived symbolically from the payoff representation
+in Data as Commodity (Appendix B) and expressed in closed form for the
+asymmetric belief configuration used in the dissertation.
 
-The following expressions the variables are given, 
+The following expressions use the variables:
 
-- $N$ = the number of players in the game 
-- $\lambda$ = the voltility aversion coefficient
-- $S_{J,i}$ = the number of transitions in player $i$s string from state 1 to any other state (0 or 1).
-- $\rho_{pub}$ = the estimator of the true parameter held by the N-2 equally informed players
-- $p_{eq}$ = the strategy played by the N-2 equally informed players
-- $q_j$ = the strategy played my player $j$
+- $N$ : total number of players in the game
+- $\lambda$ : volatility-aversion coefficient
+- $S_{J,i}$ : number of transitions from state 1 in player $i$'s observed string
+- $\rho_{pub}$ : estimator of the true parameter held by the $N-2$ equally informed players
+- $p_{eq}$ : strategy played by the $N-2$ equally informed players
+- $q_j$ : strategy played by player $j$
 --------
 
 
