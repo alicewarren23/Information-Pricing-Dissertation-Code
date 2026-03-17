@@ -49,21 +49,21 @@ D_X = \frac{1}{(-1+N)^2(-1+p_{eq})^4p_{eq}^3}  (p_{eq}^N(q_j - Nq_j + p_{eq}(p_{
 $$
 
 $$
-\boxed{R^{(i)} = A_R + B_R \hat\rho_i - \frac{\lambda(\hat\rho_i - 1)\hat\rho_i}{S_{J,i} + 3}D_R}
+\boxed{X^{(i)} = A_R + B_R \hat\rho_i - \frac{\lambda(\hat\rho_i - 1)\hat\rho_i}{S_{J,i} + 3}D_R}
 $$
 
 where
 
 $$
-A_R = (-1 + \frac{N(-p_{eq}+p_{eq}^N)}{(-1+N)(-1+ p_{eq})p_{eq}})q_j + \frac{(-1+q_j)((-1+N)p_{eq}^2 + p_{eq}^N(-1+ \hat\rho_{pub})-(-1+N)(-1+(1-p_{eq})^N)\hat\rho_{pub}(-2+N+N\hat\rho_{pub}))}{(-1+N)(-1+p_{eq})^2}
+A_K = (-1 + \frac{N(-p_{eq}+p_{eq}^N)}{(-1+N)(-1+ p_{eq})p_{eq}})q_j + \frac{(-1+q_j)((-1+N)p_{eq}^2 + p_{eq}^N(-1+ \hat\rho_{pub})-(-1+N)(-1+(1-p_{eq})^N)\hat\rho_{pub}(-2+N+N\hat\rho_{pub}))}{(-1+N)(-1+p_{eq})^2}
 $$
 
 $$
-B_R = \frac{N(p_{eq} - p_{eq}^N)q_j}{(-1+N)(-1+p_{eq})p_{eq}}
+B_K = \frac{N(p_{eq} - p_{eq}^N)q_j}{(-1+N)(-1+p_{eq})p_{eq}}
 $$
 
 and 
 
 $$
-D_R = \frac{(-1+q_j)((-1+N)p_{eq}^2+ p_{eq}^N (-1+ \hat\rho_{pub})- (-1+N)(-1 + (1- p_{eq})^N)\hat\rho_{pub}- p_{eq}(-2+ N + N\hat\rho_{pub}))}{(-1+N)(-1+p_{eq})^2})-1 + \frac{n(-p_{eq}+p_{eq}^N)}{(-1+N)(-1+p_{eq})p_{eq}}q_j 
+D_K = \frac{(-1+q_j)((-1+N)p_{eq}^2+ p_{eq}^N (-1+ \hat\rho_{pub})- (-1+N)(-1 + (1- p_{eq})^N)\hat\rho_{pub}- p_{eq}(-2+ N + N\hat\rho_{pub}))}{(-1+N)(-1+p_{eq})^2})-1 + \frac{n(-p_{eq}+p_{eq}^N)}{(-1+N)(-1+p_{eq})p_{eq}}q_j 
 $$
