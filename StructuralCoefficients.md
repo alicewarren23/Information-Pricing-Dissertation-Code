@@ -49,7 +49,7 @@ D_X = \frac{1}{(-1+N)^2(-1+p_{eq})^4p_{eq}^3}  (p_{eq}^N(q_j - Nq_j + p_{eq}(p_{
 $$
 
 $$
-\boxed{X^{(i)} = A_R + B_R \hat\rho_i - \frac{\lambda(\hat\rho_i - 1)\hat\rho_i}{S_{J,i} + 3}D_R}
+\boxed{K^{(i)} = A_R + B_R \hat\rho_i - \frac{\lambda(\hat\rho_i - 1)\hat\rho_i}{S_{J,i} + 3}D_R}
 $$
 
 where
