@@ -93,7 +93,6 @@ def Y_full(q, p):
 def q_star(p):
 
     q_guess = 0.5
-
     X = X_full(q_guess, p)
     Y = Y_full(q_guess, p)
 
@@ -130,13 +129,11 @@ def P2_val(p):
 def full_coeff(p):
 
     qs = q_star(p)
-
     if np.isnan(qs):
         return np.nan, np.nan
 
     p2 = P2_val(p)
     dy = DY_val(qs, p)
-
     coeff = 3*p2 / (4*lam*dy)
 
     return p2, coeff
@@ -147,14 +144,12 @@ def full_coeff(p):
 if __name__ == "__main__":
 
     rho_vals = np.linspace(0.1, 0.9, 400)
-
     P2_vals = []
     coeff_vals = []
 
     for r in rho_vals:
 
         p2, coeff = full_coeff(r)
-
         P2_vals.append(p2)
         coeff_vals.append(coeff)
 
@@ -168,7 +163,7 @@ if __name__ == "__main__":
 
     COLOR_P2    = '#2E86AB' 
     COLOR_COEFF = '#E84855' 
-    COLOR_ZERO  = '#6B6B6B'   # neutral grey for reference line
+    COLOR_ZERO  = '#6B6B6B' 
     FILL_ALPHA  = 0.12
 
     plt.rcParams.update({
@@ -178,7 +173,6 @@ if __name__ == "__main__":
 
     fig, axes = plt.subplots(1, 2, figsize=(14, 4.8))
 
-    #Left Plot: P2
     ax0 = axes[0]
     ax0.plot(rho_vals, P2_vals, color=COLOR_P2, linewidth=2.2, zorder=3)
     ax0.fill_between(rho_vals, P2_vals, 0,
@@ -196,7 +190,6 @@ if __name__ == "__main__":
     ax0.grid(True, which='minor', linestyle=':', linewidth=0.4, alpha=0.45)
     ax0.tick_params(axis='both', labelsize=10)
 
-    #Right Plot: full coefficient
     ax1 = axes[1]
     ax1.plot(rho_vals, coeff_vals, color=COLOR_COEFF, linewidth=2.2, zorder=3)
     ax1.fill_between(rho_vals, coeff_vals, 0,
