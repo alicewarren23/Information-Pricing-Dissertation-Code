@@ -1,6 +1,6 @@
 ## Payoff Coefficients 
 
-The document contains the payoff coefficients used player $i$'s in the volatility-neutral payoff (equation 4.3) when facing player $j$ and N-1 equally informed players. 
+The document contains the payoff coefficients used player $i$'s in the volatility-neutral payoff (equation 4.8) when facing player $j$ and N-1 equally informed players. 
 
 $$
 \Theta(\hat\rho_i, \vec{p}_{-i}) = q_j A_N(\hat\rho_i, p_{eq}) + B_N(\hat\rho_i, p_{eq})

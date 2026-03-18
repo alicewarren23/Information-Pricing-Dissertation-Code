@@ -1,7 +1,7 @@
 ## Structural Coefficient Notebook
 
 This document contains the structural coefficients that appear in the volatility-averse payoff for player $i$ when facing one opponent $j$
-and $N-2$ equally informed players (Equation 4.5 of the dissertation). These coefficients are derived symbolically from the payoff representation
+and $N-2$ equally informed players (Equation 4.17 of the dissertation). These coefficients are derived symbolically from the payoff representation
 in Data as Commodity (Appendix B) and expressed in closed form for the
 asymmetric belief configuration used in the dissertation.
 
