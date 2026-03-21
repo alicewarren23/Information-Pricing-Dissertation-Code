@@ -1,21 +1,16 @@
-"""
-PriceBounds.py
 
-Computes and plots the price-of-information bounds (Ψ_min, Ψ_max) for a
-Markov-signal information-trading game with N symmetric players.
-"""
 
 import numpy as np
+import matplotlib as mpl
 import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 from itertools import groupby
 from matplotlib.lines import Line2D
 from scipy.optimize import brentq
-from scipy.special import comb 
-import argparse
 
 
-# Constants
+#Regimes
 
 REGIME_LABELS = {1: '1', 2: '2', 4: '4', 5: '5', 6: '6'}
 
@@ -27,9 +22,10 @@ REGIME_FULLNAMES = {
     6: '(6) No-deal',
 }
 
-FEASIBLE_REGIMES = {1, 4} 
+FEASIBLE_REGIMES = {1, 4}
 
-# Section 1 – Belief estimation
+
+#Belief estimation
 
 def compute_rho_hat(sequence, w_R):
     n_11 = n_10 = n_01 = n_00 = 0
@@ -47,10 +43,10 @@ def compute_rho_hat(sequence, w_R):
         raise ValueError("w_R must be 0 or 1")
 
 
-# Section 2 – Equilibrium strategies
-
+#Equilibrium strategies 
 
 def compute_p_eq(rho, N):
+    """Compute the symmetric pre-transaction equilibrium mixing probability."""
     if rho <= 1.0 / N:
         return 0.0
     elif rho >= 1.0 - 1.0 / N:
@@ -59,8 +55,8 @@ def compute_p_eq(rho, N):
         def f(p):
             if p <= 0 or p >= 1:
                 return float('inf')
-            num   = p - p**N
-            denom = 1 - p**N - (1 - p)**N
+            num   = p - p ** N
+            denom = 1 - p ** N - (1 - p) ** N
             if abs(denom) < 1e-14:
                 return float('inf')
             return num / denom - rho
@@ -71,7 +67,7 @@ def compute_p_eq(rho, N):
 
 
 def compute_q1_pre(rho1, rho, N):
-  
+    """Compute the seller's pre-transaction best-response."""
     if rho1 < 1.0 / N - 1e-12:
         return 0.0
     elif rho1 > 1.0 - 1.0 / N + 1e-12:
@@ -79,13 +75,13 @@ def compute_q1_pre(rho1, rho, N):
     else:
         if   rho1 > rho + 1e-12: return 1.0
         elif rho1 < rho - 1e-12: return 0.0
-        else:                     return 1.0   # tie-breaking
+        else:                     return 1.0
 
 
-
-# Section 3 – Payoff coefficients (A_N, B_N, C_N, D_N)
+# Payoff coefficients
 
 def compute_A_N(rho, p, N):
+    """Coefficient A_N(rho, p) in the quadratic payoff expansion."""
     if abs(p) < 1e-14:
         return -(N * (N - 3) / (2 * (N - 1))) * rho - 1.0 / (N - 1)
     elif abs(1 - p) < 1e-14:
@@ -103,6 +99,7 @@ def compute_A_N(rho, p, N):
 
 
 def compute_B_N(rho, p, N):
+    """Coefficient B_N(rho, p) in the quadratic payoff expansion."""
     if abs(p) < 1e-14:
         return N * rho - 1
     elif abs(1 - p) < 1e-14:
@@ -117,6 +114,7 @@ def compute_B_N(rho, p, N):
 
 
 def compute_C_N(rho, p, N):
+    """Coefficient C_N(rho, p) in the quadratic payoff expansion."""
     if abs(p) < 1e-14 or abs(1 - p) < 1e-14:
         return 0.0
     p_N   = p ** N
@@ -128,6 +126,7 @@ def compute_C_N(rho, p, N):
 
 
 def compute_D_N(rho, p, N):
+    """Coefficient D_N(rho, p) in the quadratic payoff expansion."""
     if abs(p) < 1e-14 or abs(1 - p) < 1e-14:
         return 0.0
     p_N   = p ** N
@@ -138,9 +137,10 @@ def compute_D_N(rho, p, N):
     return term1 - term2
 
 
-# Section 4 – Post-transaction strategies and payoffs
+#Post-transaction strategies and payoffs
 
 def compute_q_eq(rho2, p_eq, N):
+    """Compute the symmetric post-transaction equilibrium strategy."""
     A_N = compute_A_N(rho2, p_eq, N)
     B_N = compute_B_N(rho2, p_eq, N)
     if abs(A_N) < 1e-14:
@@ -149,14 +149,16 @@ def compute_q_eq(rho2, p_eq, N):
 
 
 def compute_q1_post(rho1, rho2, p_eq, N):
-    q_eq  = compute_q_eq(rho2, p_eq, N)
-    A_N   = compute_A_N(rho1, p_eq, N)
-    B_N   = compute_B_N(rho1, p_eq, N)
+    """Compute the seller's post-transaction best-response."""
+    q_eq   = compute_q_eq(rho2, p_eq, N)
+    A_N    = compute_A_N(rho1, p_eq, N)
+    B_N    = compute_B_N(rho1, p_eq, N)
     alpha1 = A_N * q_eq + B_N
     return 1.0 if alpha1 > 1e-12 else 0.0
 
 
 def compute_U1_post(q1, q2, p_eq, rho1, N):
+    """Seller payoff after the transaction."""
     A_N = compute_A_N(rho1, p_eq, N)
     B_N = compute_B_N(rho1, p_eq, N)
     C_N = compute_C_N(rho1, p_eq, N)
@@ -165,6 +167,7 @@ def compute_U1_post(q1, q2, p_eq, rho1, N):
 
 
 def compute_U_i_general(q_i, q_j, p_eq, rho_i, N):
+    """General payoff for player i given own and opponent's strategies."""
     A_N = compute_A_N(rho_i, p_eq, N)
     B_N = compute_B_N(rho_i, p_eq, N)
     C_N = compute_C_N(rho_i, p_eq, N)
@@ -172,14 +175,9 @@ def compute_U_i_general(q_i, q_j, p_eq, rho_i, N):
     return q_i * (A_N * q_j + B_N) + C_N * q_j + D_N
 
 
-# Section 5 – Price-of-information bounds
+#Price-of-information bounds
 
 def compute_slice(rho1_grid, rho2_fixed, rho_public, N):
-    """
-    Computes Ψ_min and Ψ_max across a grid of seller beliefs for a fixed buyer
-    belief and public belief
-    """
-  
     psi_min_vals, psi_max_vals = [], []
     p_eq = compute_p_eq(rho_public, N)
 
@@ -194,36 +192,29 @@ def compute_slice(rho1_grid, rho2_fixed, rho_public, N):
         U2_pre  = compute_U_i_general(p_eq,    q1_pre,  p_eq, rho1, N)
         U2_post = compute_U_i_general(q_eq,    q1_post, p_eq, rho1, N)
 
-        psi_min_vals.append(U1_pre  - U1_post)   # seller's reservation value
-        psi_max_vals.append(U2_post - U2_pre)    # buyer's willingness to pay
+        psi_min_vals.append(U1_pre  - U1_post)
+        psi_max_vals.append(U2_post - U2_pre)
 
     return np.array(psi_min_vals), np.array(psi_max_vals)
 
 
-# Section 6 – Regime classification and plotting
+# Regime classification and plotting
 
 def classify(psi_min, psi_max):
-    """
-    Classify a (Ψ_min, Ψ_max) pair into one of six trade regimes.
-    """
-    if   psi_max > 0 and psi_min > 0 and psi_max > psi_min: return 1  # Cooperative
-    elif psi_max > 0 and psi_min > 0 and psi_min > psi_max: return 2  # Competitive
-    elif psi_min < 0 < psi_max:                              return 4  # Symbiotic
-    elif psi_max < 0 and psi_min < 0 and psi_max > psi_min: return 5  # Exploitative
-    elif psi_max < 0 and psi_min < 0 and psi_max < psi_min: return 6  # No-deal
+    """Classify a (Psi_min, Psi_max) pair into one of the six regimes."""
+    if   psi_max > 0 and psi_min > 0 and psi_max > psi_min: return 1
+    elif psi_max > 0 and psi_min > 0 and psi_min > psi_max: return 2
+    elif psi_min < 0 < psi_max:                              return 4
+    elif psi_max < 0 and psi_min < 0 and psi_max > psi_min: return 5
+    elif psi_max < 0 and psi_min < 0 and psi_max < psi_min: return 6
     else:                                                    return 0
 
 
 def plot_state_slice(ax, rho1_grid, psi_min_vals, psi_max_vals,
                      rho2_fixed, state_label, N):
-    """
-    Plot Ψ_min and Ψ_max for one conditioning state on a given Axes object..
-    """
-                       
     res     = len(rho1_grid)
     regions = np.array([classify(psi_min_vals[k], psi_max_vals[k])
                         for k in range(res)])
-
 
     prev_reg  = regions[0]
     seg_start = rho1_grid[0]
@@ -233,24 +224,22 @@ def plot_state_slice(ax, rho1_grid, psi_min_vals, psi_max_vals,
             feas = prev_reg in FEASIBLE_REGIMES
             ax.axvspan(seg_start, end,
                        color='#ffe600' if feas else '#aaaaaa',
-                       alpha=0.35, linewidth=0)
+                       alpha=0.25, linewidth=0)
             seg_start = rho1_grid[k]
             prev_reg  = regions[k]
 
-                       
-    ax.plot(rho1_grid, psi_min_vals, color='#1f77b4', lw=2.2, zorder=3)
-    ax.plot(rho1_grid, psi_max_vals, color='#ff7f0e', lw=2.2, zorder=3)
+    ax.plot(rho1_grid, psi_min_vals, color='#2E86AB', lw=2.2, zorder=3,
+            label=r'$\Psi_{\min}$')
+    ax.plot(rho1_grid, psi_max_vals, color='#E84855', lw=2.2, zorder=3,
+            label=r'$\Psi_{\max}$')
 
-
-    ax.axhline(0, color='gray', lw=0.9, ls='--', alpha=0.6, zorder=2)
-
+    ax.axhline(0, color='#6B6B6B', lw=0.9, ls='--', alpha=0.6, zorder=2)
 
     y_lo = min(psi_min_vals.min(), psi_max_vals.min())
     y_hi = max(psi_min_vals.max(), psi_max_vals.max())
     pad  = (y_hi - y_lo) * 0.08
     ax.set_ylim(y_lo - pad, y_hi + pad * 3)
     y_lo_ax, y_hi_ax = ax.get_ylim()
-
 
     placed = set()
     for reg_id, grp in groupby(enumerate(regions), key=lambda x: x[1]):
@@ -268,28 +257,30 @@ def plot_state_slice(ax, rho1_grid, psi_min_vals, psi_max_vals,
                     color='#333333', zorder=5)
             placed.add(reg_id)
 
-    #Strategy-switching threshold dotted lines
     for thr in [1.0 / N, 1.0 - 1.0 / N]:
-        ax.axvline(thr, color='white', lw=0.9, ls=':', alpha=0.8, zorder=2)
+        ax.axvline(thr, color='#6B6B6B', lw=0.9, ls=':', alpha=0.8, zorder=2)
 
     ax.set_xlim(0, 1)
     ax.set_xlabel(r'$\hat{\rho}_{\mathrm{seller}}$', fontsize=12)
     ax.set_title(
         rf'State $w = {state_label}$: fixed '
         rf'$\hat{{\rho}}_{{\mathrm{{buyer}}}} = {rho2_fixed:.3g}$',
-        fontsize=11,
+        fontsize=13, pad=10,
     )
-    ax.grid(False)
+
+    ax.xaxis.set_minor_locator(ticker.AutoMinorLocator())
+    ax.yaxis.set_minor_locator(ticker.AutoMinorLocator())
+    ax.grid(True, which='major', linestyle='-',  linewidth=0.6, alpha=0.35)
+    ax.grid(True, which='minor', linestyle=':', linewidth=0.4, alpha=0.45)
+    ax.tick_params(axis='both', labelsize=10)
+
     return regions
 
 
-# Section 7 – Markov sequence simulation and belief estimation
+#Markov sequence simulation and belief estimation ──────────────
 
 def simulate_and_estimate(T=500, p11_true=0.75, p10_true=0.30, seed=42):
-    """
-    Simulate a binary Markov sequence and estimate state-conditional
-    transition probabilities via the estimator
-    """
+   
     np.random.seed(seed)
     seq2    = np.zeros(T, dtype=int)
     seq2[0] = np.random.randint(0, 2)
@@ -304,24 +295,36 @@ def simulate_and_estimate(T=500, p11_true=0.75, p10_true=0.30, seed=42):
 
     return rho2_w1, rho2_w0, seq2
 
-# Main entry point
 
-def main(N=3, rho_public=0.5, T=500, seed=42, n_grid=500, save_path=None):
+# Main
 
-    #Simulate buyer sequence and estimate beliefs
+def main():
+    mpl.rcParams.update(mpl.rcParamsDefault)
+    plt.rcParams.update({
+        'axes.spines.top':   False,
+        'axes.spines.right': False,
+    })
+
+    N          = 3
+    rho_public = 0.5
+    T          = 500
+    seed       = 42
+    n_grid     = 500
+
+    #Simulate buyer's history and form posteriors
     rho2_w1, rho2_w0, _ = simulate_and_estimate(
         T=T, p11_true=0.75, p10_true=0.30, seed=seed
     )
-  
+
     rho1_grid = np.linspace(0.0, 1.0, n_grid)
 
-    #Compute Ψ bounds for each conditioning state
+    #Compute bounds for each state
     psi_min_1, psi_max_1 = compute_slice(rho1_grid, rho2_w1, rho_public, N)
     psi_min_0, psi_max_0 = compute_slice(rho1_grid, rho2_w0, rho_public, N)
 
+    #Plot 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5.2), sharey=False)
 
-  
     regs1 = plot_state_slice(ax1, rho1_grid, psi_min_1, psi_max_1,
                              rho2_w1, state_label=1, N=N)
     regs2 = plot_state_slice(ax2, rho1_grid, psi_min_0, psi_max_0,
@@ -332,27 +335,30 @@ def main(N=3, rho_public=0.5, T=500, seed=42, n_grid=500, save_path=None):
     all_present = sorted((set(regs1) | set(regs2)) & set(REGIME_FULLNAMES))
 
     leg_handles = [
-        Line2D([0], [0], color='#1f77b4', lw=2.2, label=r'$\Psi_{\min}$'),
-        Line2D([0], [0], color='#ff7f0e', lw=2.2, label=r'$\Psi_{\max}$'),
-        mpatches.Patch(color='#ffe600', alpha=0.5, label='Feasible (trade possible)'),
-        mpatches.Patch(color='#aaaaaa', alpha=0.5, label='Infeasible'),
+        Line2D([0], [0], color='#2E86AB', lw=2.2, label=r'$\Psi_{\min}$'),
+        Line2D([0], [0], color='#E84855', lw=2.2, label=r'$\Psi_{\max}$'),
+        mpatches.Patch(color='#ffe600', alpha=0.4,
+                       label='Feasible (trade possible)'),
+        mpatches.Patch(color='#aaaaaa', alpha=0.4, label='Infeasible'),
     ]
     for reg_id in all_present:
         leg_handles.append(
-            mpatches.Patch(color='none', label=REGIME_FULLNAMES[reg_id], linewidth=0)
+            mpatches.Patch(color='none', label=REGIME_FULLNAMES[reg_id],
+                           linewidth=0)
         )
 
     fig.legend(handles=leg_handles[:4], loc='lower center', ncol=4,
-               fontsize=8.5, framealpha=0.95, bbox_to_anchor=(0.5, -0.04))
+               fontsize=10, frameon=True, framealpha=0.95,
+               bbox_to_anchor=(0.5, -0.04))
 
     plt.tight_layout()
     plt.subplots_adjust(bottom=0.17)
 
-    if save_path:
-        fig.savefig(save_path, dpi=150, bbox_inches='tight')
-        print(f"Figure saved to: {save_path}")
+    plt.savefig("markov_price_bounds.png", dpi=300, bbox_inches="tight")
+    print("Figure saved to: markov_price_bounds.png")
     plt.show()
     plt.close(fig)
 
 
-main(save_path="PriceBounds.png")
+if __name__ == "__main__":
+    main()
