@@ -22,7 +22,7 @@ The scripts implement the theoretical expressions derived in the dissertation an
 PriceBounds.py
 ```
 
-This script computes and plots the state-dependent price-of-information bounds $\Psi_{\min}, \Psi_{\max} $ derived in Chapter 2.
+This script computes and plots the state-dependent price-of-information bounds $\Psi_{\min}, \Psi_{\max}$ derived in Chapter 2.
 
 The script:
 
@@ -52,18 +52,11 @@ This script simulates the Markov chain and decomposes the Bayesian estimation er
 
 For a realised path, $w_0, \ldots, w_R$  with true transition parameter $\rho^*$, the decomposition is given by
 
-$$
-\hat{\rho}_R - \rho^* = 
-
-\frac{M_R}{S_J + 2}
-+
-\frac{1 - 2\rho^*}{S_J + 2},
-$$
+$$\hat{\rho}_R - \rho^* = \frac{M_R}{S_J + 2} + \frac{1 - 2\rho^*}{S_J + 2}$$
 
 where
-$( M_R = \sum_{t=1}^{R}(I_t - J_t \rho^*) )$,
-$( S_I = n_{11} )$, and
-$( S_J = n_{11} + n_{10} )$.
+
+$( M_R = \sum_{t=1}^{R}(I_t - J_t \rho^*) ), \quad  S_I = n_{11}$, \quad S_J = n_{11} + n_{10}$
 
 Running the script produces:
 
