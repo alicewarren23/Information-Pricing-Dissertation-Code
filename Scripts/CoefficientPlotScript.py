@@ -195,7 +195,9 @@ def main():
 
     print("Minimum P2 across belief grid:", np.nanmin(P2_vals))
 
-    # ── Plot ─────────────────────────────────────────────────────────────────plot_curvature(rho_vals, P2_vals, coeff_vals,
+
+    # ── Plot ─────────────────────────────────────────────────────────────────
+    plot_curvature(rho_vals, P2_vals, coeff_vals,
                    save_path="equilibrium_curvature1.png")
 
 
