@@ -165,12 +165,7 @@ which corresponds tp Figure 4.1.
 
 ### Structural Coefficients
 
-The repository also includes documentation of the structural coefficients appearing in the payoff functions of the model. These correspond to:
-
-- the volatility-neutral payoff of player $i$ (Equation 4.8), and
-- the volatility-averse payoff of player $i$ (Equation 4.17).
-
-These are provided as Markdown documentation rather than executable scripts.
+The repository also includes documentation of the structural coefficients appearing in the payoff functions of the model.
 
 ---
 
